@@ -8,7 +8,7 @@ set PATH=C:\"Program Files"\Java\jdk-14.0.1\bin;%PATH%
 
 java -version
 
-set LOG4J_OPTIONS=-Dlog4j.configuration=log4j.xml
+set LOG4J_OPTIONS=-Dlog4j.configurationFile=file:./log4j2.xml
 
 java %JMX_OPTIONS% %LOG4J_OPTIONS% -classpath ./target/DbImporter-jar-with-dependencies.jar com.home.dbimportermaven.dbimporter.Main 
 

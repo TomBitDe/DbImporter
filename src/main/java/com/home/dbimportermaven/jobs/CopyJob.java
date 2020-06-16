@@ -5,14 +5,15 @@ import com.home.dbimportermaven.misc.DbHandler;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author z001xkzs
  */
 public class CopyJob implements Runnable {
-    private static final Logger LOG = Logger.getLogger(CopyJob.class.getName());
+    private static final Logger LOG = LogManager.getLogger(CopyJob.class.getName());
     private final DbHandler sourceDBHandler;
     private final DbHandler targetDBHandler;
     private final PropertiesReader propReader;

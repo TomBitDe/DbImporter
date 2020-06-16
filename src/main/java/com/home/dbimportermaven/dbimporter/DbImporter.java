@@ -9,14 +9,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The DbImport starter.
  */
 public class DbImporter implements DbImporterMBean {
-    private static final Logger LOG = Logger.getLogger(DbImporter.class);
+    private static final Logger LOG = LogManager.getLogger(DbImporter.class.getName());
 
     private static final long DBIMPORTER_TIMEOUT_DEFAULT = 10000L;
     private static final long SHUTDOWN_TIMEOUT = 2000L;
@@ -33,14 +33,10 @@ public class DbImporter implements DbImporterMBean {
     /**
      * The start method to execute.
      *
-     * @throws ClassNotFoundException
-     * @throws SQLException
+     * @throws ClassNotFoundException in case the class is not found
+     * @throws SQLException           in case of any SQL exception
      */
     public void start() throws ClassNotFoundException, SQLException {
-        String configFile = System.getProperty("log4j.configuration", "log4j.xml");
-        DOMConfigurator.configureAndWatch(configFile, 30 * 1000);
-        LOG.info("watch log4j configuration started");
-
         LOG.info("DBImporter started");
         try {
             sourceDbHandler = new DbHandler(new DbParameters("SourceDb.properties", "Source Database Parameters"));

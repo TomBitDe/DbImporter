@@ -3,13 +3,14 @@ package com.home.dbimportermaven.misc;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Handle DB parameters.
  */
 public abstract class Parameters {
-    private static final Logger LOG = Logger.getLogger(Parameters.class.getName());
+    private static final Logger LOG = LogManager.getLogger(Parameters.class.getName());
 
     private static final String DEFAULTS = "DEFAULTS";
     private final String propertiesFilename;

@@ -13,7 +13,7 @@ public class Main {
      *
      * @param args the starters arguments
      *
-     * @throws Exception
+     * @throws Exception in case of any exception
      */
     public static void main(String[] args) throws Exception {
 

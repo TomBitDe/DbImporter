@@ -11,13 +11,14 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Locale;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Handle DB connection pools using the BoneCP framework.
  */
 public class DbHandler {
-    private static final Logger LOG = Logger.getLogger(DbHandler.class.getName());
+    private static final Logger LOG = LogManager.getLogger(DbHandler.class.getName());
 
     private DbParametersIF dtp;
     private BoneCP connectionPool;
@@ -27,7 +28,7 @@ public class DbHandler {
      * <p>
      * @param parameters the parameters to use for the JDBC connection
      * <p>
-     * @throws Exception
+     * @throws Exception in case of any exception
      */
     public DbHandler(DbParametersIF parameters) throws Exception {
         dtp = parameters;
@@ -40,7 +41,7 @@ public class DbHandler {
      * @param parameters  the parameters to use for the JDBC connection
      * @param description the log message
      *
-     * @throws Exception
+     * @throws Exception in case of any exception
      */
     public DbHandler(DbParametersIF parameters, String description) throws Exception {
         this(parameters);
@@ -372,7 +373,7 @@ public class DbHandler {
     /**
      * Cleanup the JDBC connection by shutting down the connection pool.
      *
-     * @throws java.sql.SQLException
+     * @throws java.sql.SQLException in case of any SQL exception
      */
     public void cleanupJdbc() throws SQLException {
         LOG.info("Cleanup JDBC connection for " + dtp.getConnectString() + " for user " + dtp.getUserName());

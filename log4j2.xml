@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG" monitorInterval="30">
+    <Properties>
+        <Property name="basePath">./logs</Property>
+    </Properties>
+    <!-- See https://logging.apache.org/log4j/log4j-2.2/manual/layouts.html for other layout patterns -->
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%-5level] [%t] %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="LogToRollingFile" fileName="${basePath}/app.log"
+                     filePattern="${basePath}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%t] %C - %msg%n}</Pattern>
+            </PatternLayout> 
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="LogToRollingFile" />
+        </Root>
+    </Loggers>
+</Configuration>

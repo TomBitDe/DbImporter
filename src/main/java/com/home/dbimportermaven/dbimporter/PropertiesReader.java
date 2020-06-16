@@ -9,13 +9,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Properties;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
  */
 public class PropertiesReader {
-    private static final Logger LOG = Logger.getLogger(PropertiesReader.class.getName());
+    private static final Logger LOG = LogManager.getLogger(PropertiesReader.class.getName());
 
     private Properties prop;
     private final DbHandler dbHandler;
