@@ -24,7 +24,7 @@ public class DbHandler {
     private BoneCP connectionPool;
 
     /**
-     * Establish a connection pool connected to the DB.
+     * Establish a connection pool connected to the DB
      * <p>
      * @param parameters the parameters to use for the JDBC connection
      * <p>
@@ -36,8 +36,8 @@ public class DbHandler {
     }
 
     /**
-     * Establish a connection pool connected to the DB and give a log message for this.
-     * <p>
+     * Establish a connection pool connected to the DB and give a log message for this
+     *
      * @param parameters  the parameters to use for the JDBC connection
      * @param description the log message
      *
@@ -49,7 +49,7 @@ public class DbHandler {
     }
 
     /**
-     * Load the DB driver, create a pool of DB connnections and prepare variables for further use.
+     * Load the DB driver, create a pool of DB connnections and prepare variables for further use
      * <p>
      * In case of an error throw a runtime exception.
      */
@@ -77,7 +77,7 @@ public class DbHandler {
     }
 
     /**
-     * Get a BoneCP connection pool for a given amount of connnections.
+     * Get a BoneCP connection pool for a given amount of connnections
      *
      * @param maxConnections the max. amount of connnections
      *
@@ -98,7 +98,7 @@ public class DbHandler {
     }
 
     /**
-     * Get the pool connection.
+     * Get the pool connection
      *
      * @return the connection
      *
@@ -121,7 +121,7 @@ public class DbHandler {
     }
 
     /**
-     * Log the current connnection status in the connection pool.
+     * Log the current connnection status in the connection pool
      */
     public void showConnectionStatus() {
         LOG.debug("=======================================================");
@@ -133,8 +133,8 @@ public class DbHandler {
     }
 
     /**
-     * Select data from a database table.
-     * <p>
+     * Select data from a database table
+     *
      * @param con       the DB connection
      * @param selectStr the select string to use for fetching th data
      * @param tableName the table to select from
@@ -167,8 +167,8 @@ public class DbHandler {
     }
 
     /**
-     * Insert data in a database table.
-     * <p>
+     * Insert data in a database table
+     *
      * @param con       the DB connection
      * @param data      tha data to insert
      * @param tableName the table to insert into
@@ -230,8 +230,8 @@ public class DbHandler {
     }
 
     /**
-     * Generate tables in a database.
-     * <p>
+     * Generate tables in a database
+     *
      * @param con         the database connection
      * @param DDL_Strings the DDL strings to use
      * @param tableNames  the table to operate on
@@ -255,8 +255,8 @@ public class DbHandler {
     }
 
     /**
-     * Generate a singel table in a database.
-     * <p>
+     * Generate a single table in a database
+     *
      * @param con       the database connection
      * @param DDLString the DDL string to use
      * @param tableName the table to operate on
@@ -282,8 +282,8 @@ public class DbHandler {
     }
 
     /**
-     * Get the SQL meta data for a table.
-     * <p>
+     * Get the SQL meta data for a table
+     *
      * @param con       the database connnection
      * @param tableName the table to fetch metadata from
      *
@@ -325,8 +325,8 @@ public class DbHandler {
     }
 
     /**
-     * Check if a table exists in the database.
-     * <p>
+     * Check if a table exists in the database
+     *
      * @param con the JDBC connection to the database
      * @param tbl the table name
      *
@@ -351,7 +351,7 @@ public class DbHandler {
     }
 
     /**
-     * Rename the 'shadow' table to the 'target' name.
+     * Rename the 'shadow' table to the 'target' name
      *
      * @param con    the database connection
      * @param shadow the 'shadow' table name
@@ -371,9 +371,9 @@ public class DbHandler {
     }
 
     /**
-     * Cleanup the JDBC connection by shutting down the connection pool.
+     * Cleanup the JDBC connection by shutting down the connection pool
      *
-     * @throws java.sql.SQLException in case of any SQL exception
+     * @throws SQLException in case of any SQL exception
      */
     public void cleanupJdbc() throws SQLException {
         LOG.info("Cleanup JDBC connection for " + dtp.getConnectString() + " for user " + dtp.getUserName());

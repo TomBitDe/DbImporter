@@ -4,19 +4,25 @@ import com.home.dbimportermaven.misc.DbParametersDefault;
 import com.home.dbimportermaven.misc.DbParametersIF;
 
 /**
- *
+ * Common DB parameters.
  */
 public class DbParameters implements DbParametersIF {
     private final DbParametersDefault dbParameters;
 
     /**
-     * Creates new SourceDbParameters
+     * Creates new DbParameters
      */
     public DbParameters() {
         dbParameters = new DbParametersDefault("db.properties", "Database Parameters");
         dbParameters.getParameters();
     }
 
+    /**
+     * Creates new DbParameters
+     *
+     * @param fileName    the properties file to use
+     * @param description a description text for the parameter set
+     */
     public DbParameters(String fileName, String description) {
         dbParameters = new DbParametersDefault(fileName, description);
         dbParameters.getParameters();

@@ -22,7 +22,7 @@ public abstract class Parameters {
     protected Properties properties = null;
 
     /**
-     * Buildup the Parameters.
+     * Buildup the Parameters
      *
      * @param propertiesFilename    the properties file to use
      * @param propertiesDescription the properties description
@@ -34,24 +34,24 @@ public abstract class Parameters {
     }
 
     /**
-     * Set the database defaults.
+     * Set the database defaults
      *
      * @param defaults the default propeties
      */
     abstract public void setDefaults(Properties defaults);
 
     /**
-     * Update the properties from settings.
+     * Update the properties from settings
      */
     abstract public void updatePropertiesFromSettings();
 
     /**
-     * Update the settings form properties.
+     * Update the settings form properties
      */
     abstract public void updateSettingsFromProperties();
 
     /**
-     * Get the properties origin.
+     * Get the properties origin
      *
      * @return the origin
      */
@@ -60,9 +60,9 @@ public abstract class Parameters {
     }
 
     /**
-     * Get parametes from a property file.
+     * Get parametes from a property file
      * <p>
-     * In case the properties file is not accessable default values are set.
+     * In case the properties file is not accessable default values are set
      */
     public void getParameters() {
         Properties defaults = new Properties();
@@ -102,7 +102,7 @@ public abstract class Parameters {
     }
 
     /**
-     * Save the parameters in a property file.
+     * Save the parameters in a property file
      */
     public void saveParameters() {
         updatePropertiesFromSettings();
@@ -137,7 +137,7 @@ public abstract class Parameters {
     }
 
     /**
-     * Get the name of the folder where the configuration file is placed.
+     * Get the name of the folder where the configuration file is placed
      * <p>
      * Can be defines as a system property named "ConfigFolder". If the system property does not exist or is empty than
      * the value of system property "user.dir" is used

@@ -13,7 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- *
+ * Properties reader for DbImporter specific properties.<br>
+ * Read the properties and do checks on the property values.
  */
 public class PropertiesReader {
     private static final Logger LOG = LogManager.getLogger(PropertiesReader.class.getName());
@@ -23,6 +24,12 @@ public class PropertiesReader {
     private String[] orgTable;
     private final HashMap<String, String> createStrings;
 
+    /**
+     * Create a new properties reader
+     *
+     * @param fileName  the properties file to read from
+     * @param dbHandler the related DbHandler
+     */
     public PropertiesReader(String fileName, DbHandler dbHandler) {
         this.dbHandler = dbHandler;
         createStrings = new HashMap<>();
@@ -58,7 +65,7 @@ public class PropertiesReader {
         for (String orgTable1 : orgTable) {
             if (!dbHandler.testTableExists(con, orgTable1)) {
                 LOG.fatal("Configuration-Error: Cannot find table " + orgTable1 + " in source Database");
-                LOG.fatal("Program is stopping due Error");
+                LOG.fatal("Program is stopping due to Error");
                 throw new IllegalStateException("Configuration-Error: Cannot find table " + orgTable1 + " in source Database");
             }
         }
