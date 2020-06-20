@@ -2,6 +2,7 @@ package com.home.dbimportermaven.dbimporter;
 
 import com.home.dbimportermaven.jobs.CopyJob;
 import com.home.dbimportermaven.misc.DbHandler;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import org.apache.commons.io.monitor.FileEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 public class DbImporter implements DbImporterMBean {
     private static final Logger LOG = LogManager.getLogger(DbImporter.class.getName());
 
+    private static final String DBIMPORTER_CONFIG = "config.properties";
     private static final long DBIMPORTER_TIMEOUT_DEFAULT = 10000L;
     private static final long SHUTDOWN_TIMEOUT = 2000L;
     private long dbImporterTimeout;
@@ -29,6 +32,8 @@ public class DbImporter implements DbImporterMBean {
     private static String[] sourceTableNames;
     private static ScheduledExecutorService scheduledExecutorService = null;
     private static final HashMap<String, ScheduledFuture> jobs = new HashMap<>();
+    private static final File MONITORED_CONFIG_FILE = new File(DBIMPORTER_CONFIG);
+    private static final FileEntry monitoredFileEntry = new FileEntry(MONITORED_CONFIG_FILE);
 
     /**
      * The start method to execute
@@ -45,10 +50,16 @@ public class DbImporter implements DbImporterMBean {
 
             setupJobs();
 
+            monitoredFileEntry.refresh(MONITORED_CONFIG_FILE);
+
             for (;;) {
                 while (!stop) {
-                    dbImporterTimeout = getDbImporterTimeout();
-                    Thread.sleep(dbImporterTimeout);
+                    if (monitoredFileEntry.refresh(MONITORED_CONFIG_FILE)) {
+                        stop();
+                        restart();
+                    }
+
+                    Thread.sleep(getDbImporterTimeout());
 
                     sourceDbHandler.showConnectionStatus();
                     targetDbHandler.showConnectionStatus();
@@ -138,7 +149,7 @@ public class DbImporter implements DbImporterMBean {
      * @throws SQLException in case of any SQL exception
      */
     private void setupJobs() throws SQLException {
-        propReader = new PropertiesReader("config.properties", sourceDbHandler);
+        propReader = new PropertiesReader(DBIMPORTER_CONFIG, sourceDbHandler);
         sourceTableNames = propReader.getSourceTableNames();
         // The number of source tables defines how many threads have to be scheduled
         scheduledExecutorService = Executors.newScheduledThreadPool(propReader.getSourceTableNames().length);
@@ -148,6 +159,7 @@ public class DbImporter implements DbImporterMBean {
             // Error case; Exit program
             throw new IllegalStateException("Source table check failed");
         }
+
         LinkedList<String> DDL_Strings = propReader.generateDDL(sourceDbHandler.getConnection());
         LinkedList<String> newTableNames = propReader.getTargetTableNames();
         targetDbHandler.generateTables(targetDbHandler.getConnection(), DDL_Strings, newTableNames);
