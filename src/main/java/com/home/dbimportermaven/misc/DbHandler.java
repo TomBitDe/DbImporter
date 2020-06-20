@@ -72,7 +72,7 @@ public class DbHandler {
 
     private void loadDbDriver() throws Exception {
         LOG.info("Try to load database driver " + dtp.getDriver());
-        Class.forName(dtp.getDriver()).newInstance();
+        Class.forName(dtp.getDriver()).getDeclaredConstructor().newInstance();
         LOG.info("Database driver loaded...");
     }
 
