@@ -3,6 +3,7 @@ package com.home.dbimportermaven.dbimporter;
 import com.home.dbimportermaven.jobs.CopyJob;
 import com.home.dbimportermaven.misc.DbHandler;
 import java.io.File;
+import java.lang.management.ManagementFactory;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -10,6 +11,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 import org.apache.commons.io.monitor.FileEntry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -185,5 +188,27 @@ public class DbImporter implements DbImporterMBean {
         scheduledExecutorService.shutdown();
         scheduledExecutorService.awaitTermination(10, TimeUnit.SECONDS);
         LOG.info("ScheduledExecutorService terminated...");
+    }
+
+    /**
+     * The starter for registering as MBean and starting DbImporter.<br>
+     * Currently no arguments needed
+     *
+     * @param args the starters arguments
+     *
+     * @throws Exception in case of any exception
+     */
+    public static void main(String[] args) throws Exception {
+        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+        DbImporter mbean = new DbImporter();
+        String mbo = mbean.getClass().getPackage().getName()
+                + ":type="
+                + mbean.getClass().getSimpleName();
+        ObjectName name = new ObjectName(mbo);
+        mbs.registerMBean(mbean, name);
+
+        // The start is looping forever what is needed here otherwise the following is needed:
+        // Thread.sleep(Long.MAX_VALUE);
+        mbean.start();
     }
 }
